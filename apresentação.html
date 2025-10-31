@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
@@ -8,6 +9,14 @@
     <style>
         /* Estilização para a fonte Inter */
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+        
+        /* CORREÇÃO: Garante que HTML e Body ocupem 100% da viewport, removendo margens padrão */
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
         body {
             font-family: 'Inter', sans-serif;
             background-color: #f1f5f9; /* Azul claro/cinza para fundo profissional */
@@ -91,7 +100,7 @@
         }
     </style>
 </head>
-<body class="min-h-screen flex items-center justify-center">
+<body class="h-screen flex items-center justify-center">
 
     <!-- Container Principal da Apresentação - Ajustado para ocupar mais espaço na tela -->
     <div id="presentation-container" class="relative w-full max-w-7xl h-[95vh] shadow-2xl rounded-2xl overflow-hidden bg-white ring-8 ring-blue-100">
