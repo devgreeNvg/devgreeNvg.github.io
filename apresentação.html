@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apresentação Financeira Interativa</title>
+    <!-- Carrega Tailwind CSS para estilização profissional e responsiva -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Estilização para a fonte Inter */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f1f5f9; /* Azul claro/cinza para fundo profissional */
+        }
+        .slide {
+            transition: opacity 0.7s ease-in-out, transform 0.7s ease-in-out;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: none;
+            padding: 3rem;
+            opacity: 0;
+        }
+        .slide.active {
+            display: flex;
+            opacity: 1;
+            transform: translateX(0);
+        }
+        .slide.hidden-left {
+            transform: translateX(-100%);
+        }
+        .slide.hidden-right {
+            transform: translateX(100%);
+        }
+        .slide-title {
+            color: #0d47a1; /* Azul corporativo */
+            font-weight: 700;
+            border-bottom: 3px solid #64b5f6;
+        }
+        /* Estilo da caixa de imagem, garantindo que seja um placeholder claro */
+        .image-placeholder {
+            min-height: 250px;
+            background-color: #e3f2fd; /* Fundo azul bem claro */
+            border: 2px dashed #90caf9;
+        }
+        /* Animação de entrada para o conteúdo do slide */
+        @keyframes fadeInSlide {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-content > * {
+            animation: fadeInSlide 0.6s ease-out forwards;
+        }
+        .animate-content h1 { animation-delay: 0s; }
+        .animate-content p, .animate-content ul { animation-delay: 0.2s; }
+        .animate-content > :nth-child(3) { animation-delay: 0.4s; }
+        .animate-content > :nth-child(4) { animation-delay: 0.6s; }
+        .animate-content > :nth-child(5) { animation-delay: 0.8s; }
+
+        /* Estilo para o modal de IA */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.6);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 50;
+        }
+        .modal-content {
+            background-color: white;
+            width: 90%;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            transform: scale(0.9);
+            opacity: 0;
+            transition: all 0.3s ease-in-out;
+        }
+        .modal-overlay.active {
+            display: flex;
+        }
+        .modal-overlay.active .modal-content {
+            transform: scale(1);
+            opacity: 1;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center">
+
+    <!-- Container Principal da Apresentação - Ajustado para ocupar mais espaço na tela -->
+    <div id="presentation-container" class="relative w-full max-w-7xl h-[95vh] shadow-2xl rounded-2xl overflow-hidden bg-white ring-8 ring-blue-100">
+
+        <!-- Header e Contador de Slides -->
+        <div class="absolute top-0 left-0 right-0 p-4 bg-white border-b border-blue-100 flex justify-between items-center z-10">
+            <h1 class="text-lg font-bold text-blue-800 tracking-wider">🏦 Gestão de Custos para Empreendedores</h1>
+            <!-- Instruções de navegação adicionadas -->
+            <div class="text-sm font-medium text-gray-400 hidden sm:block">
+                Use <span class="font-bold text-gray-600">A/D</span> ou <span class="font-bold text-gray-600">←/→</span> para navegar
+            </div>
+            <div id="slide-counter" class="text-sm font-medium text-gray-600">Slide 1 / 8</div>
+        </div>
+
+        <!-- Área de Slides: pt-16 (header) e pb-4 (pequena margem) -->
+        <div id="slides-wrapper" class="w-full h-full relative pt-16 pb-4">
+
+            <!-- INÍCIO DO SLIDE 1: INTRODUÇÃO -->
+            <div data-slide="1" class="slide active">
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-10 w-full h-full items-center">
+                    <!-- Coluna de Texto (Esquerda - 7/12) -->
+                    <div class="col-span-1 md:col-span-7 flex flex-col justify-center h-full animate-content space-y-4">
+                        <p class="text-4xl">🚀</p>
+                        <h1 class="slide-title text-4xl mb-4 pb-2">Introdução - O Sonho de Empreender</h1>
+
+                        <p class="text-gray-700 text-lg leading-relaxed">
+                            Quem nunca sonhou em ter o próprio negócio? Seja uma loja, um canal no YouTube ou até vender aqueles brigadeiros incríveis que você faz. A ideia parece divertida e, claro, a gente pensa logo no dinheiro que vai ganhar!
+                        </p>
+
+                        <p class="text-gray-700 text-lg leading-relaxed">
+                            Mas calma lá. Para um negócio dar certo de verdade, não basta só ter uma boa ideia. É preciso entender como o dinheiro funciona: como ele entra, mas principalmente, como ele sai. E é aí que muita gente se perde.
+                        </p>
+
+                        <p class="text-blue-700 font-semibold text-xl leading-relaxed mt-4">
+                            Todo produto ou serviço tem um preço que precisa cobrir os gastos e ainda gerar <strong>lucro</strong>. Então, antes de colocar qualquer ideia em prática, precisamos entender: quais são os <strong>custos</strong> do nosso negócio? 💡
+                        </p>
+                    </div>
+
+                    <!-- Coluna de Imagem (Direita - 5/12) -->
+                    <div class="col-span-1 md:col-span-5 flex items-center justify-center h-full">
+                        <div class="image-placeholder w-full h-4/5 rounded-xl flex flex-col items-center justify-center text-gray-500 p-8 text-center shadow-inner">
+                            <svg class="w-16 h-16 text-blue-500 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                            <p class="font-semibold text-blue-700">ESPAÇO PARA IMAGEM 1</p>
+                            <p class="text-sm">Substitua este conteúdo por uma imagem relevante (ex: pessoa sonhando ou iniciando um negócio).</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- FIM DO SLIDE 1 -->
+
+            <!-- INÍCIO DO SLIDE 2: ENTENDENDO OS GASTOS -->
+            <div data-slide="2" class="slide">
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-10 w-full h-full items-center">
+                    <div class="col-span-1 md:col-span-7 flex flex-col justify-center h-full animate-content space-y-4">
+                        <p class="text-4xl">🗺️</p>
+                        <h1 class="slide-title text-4xl mb-4 pb-2">O Mundo dos Custos - Entendendo os Gastos</h1>
+
+                        <p class="text-gray-700 text-lg leading-relaxed">
+                            Tudo na vida tem um custo, né? A energia elétrica, o transporte, a internet... No mundo dos negócios funciona da mesma forma. Para uma empresa existir e funcionar, ela precisa ter gastos constantes.
+                        </p>
+
+                        <p class="text-gray-700 text-lg leading-relaxed">
+                            Entender os custos é como ter um mapa do tesouro financeiro: quando você sabe exatamente onde o dinheiro está sendo gasto, consegue planejar melhor e fazer escolhas mais inteligentes. 🔍
+                        </p>
+
+                        <p class="text-blue-700 font-semibold text-xl leading-relaxed mt-4">
+                            Existem vários tipos de custos no mundo empresarial, mas hoje vamos focar em dois principais: os <strong>custos fixos</strong> e os <strong>custos variáveis</strong>. Dominar esses conceitos é fundamental para qualquer pessoa que queira empreender com sucesso! 🥇
+                        </p>
+                    </div>
+                    <div class="col-span-1 md:col-span-5 flex items-center justify-center h-full">
+                        <div class="image-placeholder w-full h-4/5 rounded-xl flex flex-col items-center justify-center text-gray-500 p-8 text-center shadow-inner">
+                            <svg class="w-16 h-16 text-blue-500 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c1.657 0 3 .895 3 2s-1.343 2-3 2h-1a2 2 0 00-2 2v3m2-3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            <p class="font-semibold text-blue-700">ESPAÇO PARA IMAGEM 2</p>
+                            <p class="text-sm">Sugestão: Imagem de um gráfico ou balança financeira.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- FIM DO SLIDE 2 -->
+
+            <!-- INÍCIO DO SLIDE 3: CUSTOS FIXOS -->
+            <div data-slide="3" class="slide">
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-10 w-full h-full items-center">
+                    <div class="col-span-1 md:col-span-7 flex flex-col justify-center h-full animate-content space-y-4">
+                        <p class="text-4xl">🏠🔒</p>
+                        <h1 class="slide-title text-4xl mb-4 pb-2">Custos Fixos - O Aluguel que Não Espera</h1>
+
+                        <p class="text-gray-700 text-lg leading-relaxed">
+                            Pense naquelas contas que você (ou sua família) paga todo mês, independente de qualquer coisa. A mensalidade da internet, o aluguel, aquela aula extra... Chegam todo mês, faça chuva ou faça sol.
+                        </p>
+
+                        <p class="text-gray-700 text-lg leading-relaxed">
+                            No mundo das empresas, os <strong>custos fixos</strong> são exatamente isso: gastos que não mudam (ou mudam muito pouco), não importa quanto a empresa produza ou venda.
+                        </p>
+
+                        <p class="text-red-600 font-semibold text-xl leading-relaxed mt-4 bg-red-50 p-3 rounded-lg border border-red-200">
+                            Eles existem mês após mês, <strong>mesmo que a empresa não venda absolutamente nada.</strong> 🛑 São a base, a estrutura necessária para o negócio funcionar.
+                        </p>
+                    </div>
+                    <div class="col-span-1 md:col-span-5 flex items-center justify-center h-full">
+                        <div class="image-placeholder w-full h-4/5 rounded-xl flex flex-col items-center justify-center text-gray-500 p-8 text-center shadow-inner">
+                            <svg class="w-16 h-16 text-blue-500 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h.01M7 12h4m-1 8h.01M17 12h.01M12 21V12M6 21h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v13a2 2 0 002 2z"></path></svg>
+                            <p class="font-semibold text-blue-700">ESPAÇO PARA IMAGEM 3</p>
+                            <p class="text-sm">Sugestão: Um calendário ou a fatura de um aluguel.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- FIM DO SLIDE 3 -->
+
+            <!-- INÍCIO DO SLIDE 4: EXEMPLOS REAIS DE CUSTOS FIXOS -->
+            <div data-slide="4" class="slide">
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-10 w-full h-full items-center">
+                    <div class="col-span-1 md:col-span-7 flex flex-col justify-center h-full animate-content space-y-4">
+                        <p class="text-4xl">💰</p>
+                        <h1 class="slide-title text-4xl mb-4 pb-2">Exemplos Reais de Custos Fixos</h1>
+
+                        <ul class="list-disc ml-6 space-y-3 text-lg text-gray-700">
+                            <li><span class="font-bold text-blue-600">🍕 Pizzaria do Bairro:</span> Aluguel do ponto, salário fixo do pizzaiolo, IPTU do imóvel, parte básica da conta de água/luz.</li>
+                            <li><span class="font-bold text-blue-600">💻 Canal de YouTube:</span> Aluguel de estúdio/escritório, salário mensal de um editor ou assistente, internet superpotente para upload de vídeos.</li>
+                            <li><span class="font-bold text-blue-600">📖 Exemplo de Mercado:</span> Luiza Trajano (Magazine Luiza) sempre destaca que conhecer os <strong>custos fixos</strong> (como aluguel de lojas, sistemas de gestão e salários) foi essencial para expandir de forma sustentável.</li>
+                        </ul>
+
+                        <p class="text-blue-700 font-semibold text-xl leading-relaxed mt-4">
+                            São os gastos que mantêm a porta aberta e a estrutura funcionando! ⚙️
+                        </p>
+                    </div>
+                    <div class="col-span-1 md:col-span-5 flex items-center justify-center h-full">
+                        <div class="image-placeholder w-full h-4/5 rounded-xl flex flex-col items-center justify-center text-gray-500 p-8 text-center shadow-inner">
+                            <svg class="w-16 h-16 text-blue-500 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m4 2h.01M17 14h-7m5 0h.01M16 19h4a2 2 0 002-2v-6a2 2 0 00-2-2h-4a2 2 0 00-2 2v6a2 2 0 002 2z"></path></svg>
+                            <p class="font-semibold text-blue-700">ESPAÇO PARA IMAGEM 4</p>
+                            <p class="text-sm">Sugestão: Imagem de contas ou faturas empilhadas.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- FIM DO SLIDE 4 -->
+
+            <!-- INÍCIO DO SLIDE 5: A CERTEZA DOS CUSTOS FIXOS -->
+            <div data-slide="5" class="slide">
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-10 w-full h-full items-center">
+                    <div class="col-span-1 md:col-span-7 flex flex-col justify-center h-full animate-content space-y-4">
+                        <p class="text-4xl">🛡️⚠️</p>
+                        <h1 class="slide-title text-4xl mb-4 pb-2">A Certeza dos Custos Fixos</h1>
+
+                        <p class="text-gray-700 text-lg leading-relaxed">
+                            É fundamental entender que os custos fixos são o <strong>"piso de gastos"</strong> de qualquer empresa. Isso significa que, mesmo que algo dê errado, as vendas caiam ou a empresa fique um mês inteiro sem vender nada, esses custos ainda precisarão ser pagos.
+                        </p>
+
+                        <p class="text-blue-700 font-semibold text-xl leading-relaxed p-3 bg-blue-50 rounded-lg border border-blue-200">
+                            <strong>Pergunta Crucial:</strong> Antes de abrir qualquer negócio, você precisa ter bem claro: <strong>quanto vou gastar TODO mês, independente de quanto vender?</strong> Essa é a pergunta mais importante.
+                        </p>
+
+                        <p class="text-red-700 font-semibold text-lg leading-relaxed mt-4">
+                            Muitos negócios quebram não por falta de clientes, mas porque os empreendedores não calcularam corretamente seus custos fixos e ficaram sem dinheiro para pagar as contas básicas. Conhecer seus custos fixos é uma questão de <strong>sobrevivência empresarial</strong>.
+                        </p>
+                    </div>
+                    <div class="col-span-1 md:col-span-5 flex items-center justify-center h-full">
+                        <div class="image-placeholder w-full h-4/5 rounded-xl flex flex-col items-center justify-center text-gray-500 p-8 text-center shadow-inner">
+                            <svg class="w-16 h-16 text-blue-500 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 3h.01M17 6H7a4 4 0 00-4 4v4a4 4 0 004 4h10a4 4 0 004-4v-4a4 4 0 00-4-4z"></path></svg>
+                            <p class="font-semibold text-blue-700">ESPAÇO PARA IMAGEM 5</p>
+                            <p class="text-sm">Sugestão: Um termômetro ou medidor de segurança.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- FIM DO SLIDE 5 -->
+
+            <!-- INÍCIO DO SLIDE 6: CUSTOS VARIÁVEIS -->
+            <div data-slide="6" class="slide">
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-10 w-full h-full items-center">
+                    <div class="col-span-1 md:col-span-7 flex flex-col justify-center h-full animate-content space-y-4">
+                        <p class="text-4xl">📈</p>
+                        <h1 class="slide-title text-4xl mb-4 pb-2">Custos Variáveis - Quanto Mais Vende, Mais Gasta</h1>
+
+                        <p class="text-gray-700 text-lg leading-relaxed">
+                            Agora vamos para outro tipo de custo: os <strong>custos variáveis</strong>. Como o próprio nome diz, eles variam de acordo com o que você produz ou vende.
+                        </p>
+
+                        <p class="text-gray-700 text-lg leading-relaxed">
+                            Imagine que você vai vender sanduíches na escola. Os ingredientes (pão, queijo, presunto, maionese) são custos variáveis. Por quê? Porque a quantidade que você gasta depende diretamente de <strong>quantos sanduíches vai fazer</strong>.
+                        </p>
+
+                        <p class="text-blue-700 font-semibold text-xl leading-relaxed mt-4">
+                            Quanto mais você vende, mais você gasta com <strong>custos variáveis</strong>. Quanto menos vende, menos gasta. Simples assim! 🔄
+                        </p>
+                    </div>
+                    <div class="col-span-1 md:col-span-5 flex items-center justify-center h-full">
+                        <div class="image-placeholder w-full h-4/5 rounded-xl flex flex-col items-center justify-center text-gray-500 p-8 text-center shadow-inner">
+                            <svg class="w-16 h-16 text-blue-500 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6m4 0a1 1 0 100-2 1 1 0 000 2zm11 0a1 1 0 100-2 1 1 0 000 2zm-11-2h8m-1-10v6a2 2 0 002 2h2a2 2 0 002-2v-6m-6 0h6"></path></svg>
+                            <p class="font-semibold text-blue-700">ESPAÇO PARA IMAGEM 6</p>
+                            <p class="text-sm">Sugestão: Balança com peso e dinheiro, ou um item sendo multiplicado.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- FIM DO SLIDE 6 -->
+
+            <!-- INÍCIO DO SLIDE 7: CUSTOS VARIÁVEIS EM PRODUTOS E SERVIÇOS -->
+            <div data-slide="7" class="slide">
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-10 w-full h-full items-center">
+                    <div class="col-span-1 md:col-span-7 flex flex-col justify-center h-full animate-content space-y-4">
+                        <p class="text-4xl">🖌️🏍️</p>
+                        <h1 class="slide-title text-4xl mb-4 pb-2">Custos Variáveis em Produtos e Serviços</h1>
+
+                        <p class="text-gray-700 text-lg leading-relaxed">
+                            Os custos variáveis não existem só para quem vende produtos. Eles também aparecem para quem oferece serviços!
+                        </p>
+
+                        <ul class="list-disc ml-6 space-y-3 text-lg text-gray-700">
+                            <li><span class="font-bold text-blue-600">Pintor:</span> Compra de tinta, pincéis novos, lonas. Cada casa pintada = novos materiais.</li>
+                            <li><span class="font-bold text-blue-600">Professor Particular:</span> Custos com materiais impressos específicos para cada aula ou plataforma de videochamada.</li>
+                            <li><span class="font-bold text-blue-600">Motoboy:</span> Combustível e manutenção da moto. Quanto mais entregas faz, mais gasta.</li>
+                        </ul>
+
+                        <p class="text-blue-700 font-semibold text-sm leading-relaxed mt-4">
+                            Exemplo Real: O iFood foi construído entendendo que os <strong>custos variáveis</strong> (embalagens, taxas por entrega) precisavam ser precisamente calculados para cada pedido.
+                        </p>
+                    </div>
+                    <div class="col-span-1 md:col-span-5 flex items-center justify-center h-full">
+                        <div class="image-placeholder w-full h-4/5 rounded-xl flex flex-col items-center justify-center text-gray-500 p-8 text-center shadow-inner">
+                            <svg class="w-16 h-16 text-blue-500 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                            <p class="font-semibold text-blue-700">ESPAÇO PARA IMAGEM 7</p>
+                            <p class="text-sm">Sugestão: Imagem representando prestação de serviços (e.g., uma mão apertando outra).</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- FIM DO SLIDE 7 -->
+
+            <!-- INÍCIO DO SLIDE 8: POR QUE CONHECER OS CUSTOS VARIÁVEIS É CRUCIAL (COM FEATURE IA) -->
+            <div data-slide="8" class="slide">
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-10 w-full h-full items-center">
+                    <div class="col-span-1 md:col-span-7 flex flex-col justify-center h-full animate-content space-y-4">
+                        <p class="text-4xl">🏷️</p>
+                        <h1 class="slide-title text-4xl mb-4 pb-2">Por Que Conhecer os Custos Variáveis é Crucial</h1>
+
+                        <p class="text-gray-700 text-lg leading-relaxed">
+                            Saber quanto custa produzir cada unidade do seu produto ou serviço é essencial para definir o preço de venda.
+                        </p>
+
+                        <p class="text-red-700 font-bold text-xl leading-relaxed p-4 bg-red-50 rounded-lg border border-red-200">
+                            Se seu sanduíche custa R$ 5,00 só de ingredientes (<strong>custo variável</strong>), e você vende por R$ 4,00, vai ter <strong>prejuízo em cada sanduíche vendido</strong>. Parece óbvio, mas muita gente cai nessa armadilha! ❌
+                        </p>
+
+                        <p class="text-gray-700 text-lg leading-relaxed">
+                            Entender os <strong>custos variáveis</strong> permite colocar um preço justo que cubra os gastos de produção, os <strong>custos fixos</strong> e ainda gere lucro para o negócio crescer.
+                        </p>
+
+                        <div class="mt-6 flex flex-col space-y-2">
+                            <button id="gemini-tip-btn" class="px-4 py-2 bg-purple-600 text-white font-bold rounded-lg shadow-md hover:bg-purple-700 transition duration-300 flex items-center justify-center disabled:opacity-50" style="display: none;">
+                                <svg id="tip-spinner" class="animate-spin -ml-1 mr-3 h-5 w-5 text-white hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                </svg>
+                                Gerar Dica Rápida do Gemini ✨
+                            </button>
+                            <div id="gemini-tip-result" class="text-blue-800 bg-blue-100 p-3 rounded-lg text-sm font-medium transition duration-500" style="min-height: 40px;">
+                                <!-- O resultado da IA aparecerá aqui -->
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-span-1 md:col-span-5 flex items-center justify-center h-full">
+                        <div class="image-placeholder w-full h-4/5 rounded-xl flex flex-col items-center justify-center text-gray-500 p-8 text-center shadow-inner">
+                            <svg class="w-16 h-16 text-blue-500 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c1.657 0 3 .895 3 2s-1.343 2-3 2h-1a2 2 0 00-2 2v3m2-3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            <p class="font-semibold text-blue-700">ESPAÇO PARA IMAGEM 8</p>
+                            <p class="text-sm">Sugestão: Uma etiqueta de preço ou uma calculadora.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- FIM DO SLIDE 8 -->
+        </div>
+        
+        <!-- Controles de Navegação (Rodapé) - Removidos os botões físicos -->
+        <!-- O espaço de rodapé foi removido para maximizar o slide -->
+    </div>
+
+    <!-- Botão Flutuante de IA simplificado -->
+    <button id="ai-tool-btn" class="fixed bottom-6 right-6 bg-green-500 text-white p-4 rounded-full shadow-xl hover:bg-green-600 transition duration-300 z-20 font-bold text-xl w-16 h-16 flex items-center justify-center transform hover:scale-105">
+        💰
+    </button>
+
+    <!-- Modal do Analisador de Custos -->
+    <div id="cost-analyzer-modal" class="modal-overlay" onclick="closeModal(event)">
+        <div class="modal-content p-6 md:p-10">
+            <h2 class="text-3xl font-bold text-blue-800 mb-6 border-b pb-2">Analisador de Custos por IA 🤖</h2>
+            
+            <p class="text-gray-700 mb-4">Descreva sua ideia de negócio (Ex: "Loja virtual de artesanato" ou "Consultoria fitness online").</p>
+            
+            <input type="text" id="business-idea-input" placeholder="Minha ideia de negócio é..." class="w-full p-3 mb-4 border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:ring focus:ring-blue-200 transition duration-200">
+            
+            <button id="analyze-costs-btn" class="w-full px-4 py-3 bg-blue-600 text-white font-bold rounded-lg shadow-md hover:bg-blue-700 transition duration-300 flex items-center justify-center disabled:opacity-50">
+                <svg id="analyzer-spinner" class="animate-spin -ml-1 mr-3 h-5 w-5 text-white hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                Gerar Análise de Custos ✨
+            </button>
+
+            <div id="cost-analyzer-result" class="mt-8 p-5 bg-gray-50 rounded-lg border border-gray-200">
+                <h3 class="text-xl font-semibold text-gray-800 mb-3">Resultados da Análise:</h3>
+                <p id="initial-message" class="text-gray-500 italic">O Gemini listará os custos fixos e variáveis da sua ideia aqui.</p>
+            </div>
+
+            <button onclick="document.getElementById('cost-analyzer-modal').classList.remove('active')" class="mt-6 text-sm text-gray-500 hover:text-gray-800 transition duration-300">
+                Fechar Analisador
+            </button>
+        </div>
+    </div>
+
+
+    <script>
+        // API Configuration (API Key is intentionally left empty and will be supplied by the Canvas environment)
+        const apiKey = "";
+        const modelName = "gemini-2.5-flash-preview-09-2025";
+        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${apiKey}`;
+
+        const totalSlides = 8; 
+        let currentSlide = 1;
+
+        const slidesWrapper = document.getElementById('slides-wrapper');
+        const slideCounter = document.getElementById('slide-counter');
+        const aiToolBtn = document.getElementById('ai-tool-btn');
+        const modal = document.getElementById('cost-analyzer-modal');
+        const analyzeBtn = document.getElementById('analyze-costs-btn');
+        const ideaInput = document.getElementById('business-idea-input');
+        const analyzerSpinner = document.getElementById('analyzer-spinner');
+        const analyzerResult = document.getElementById('cost-analyzer-result');
+        const initialMessage = document.getElementById('initial-message');
+        const geminiTipBtn = document.getElementById('gemini-tip-btn');
+        const tipSpinner = document.getElementById('tip-spinner');
+        const tipResult = document.getElementById('gemini-tip-result');
+
+        // Mapeia todos os slides visíveis
+        const allSlides = Array.from(slidesWrapper.querySelectorAll('[data-slide]'));
+
+        // --- Funções de Navegação e UI ---
+
+        /**
+         * Atualiza a visibilidade e o estado de animação dos slides.
+         */
+        function updateSlide(newIndex, direction) {
+            if (newIndex < 1 || newIndex > totalSlides) return;
+
+            const currentSlideElement = slidesWrapper.querySelector(`.slide.active`);
+            if (currentSlideElement) {
+                currentSlideElement.classList.remove('active');
+                if (direction === 'next') {
+                    currentSlideElement.classList.add('hidden-left');
+                } else if (direction === 'prev') {
+                    currentSlideElement.classList.add('hidden-right');
+                }
+
+                setTimeout(() => {
+                    currentSlideElement.style.display = 'none';
+                    currentSlideElement.classList.remove('hidden-left', 'hidden-right');
+                }, 700);
+            }
+
+            currentSlide = newIndex;
+
+            const newSlideElement = slidesWrapper.querySelector(`[data-slide="${currentSlide}"]`);
+            if (newSlideElement) {
+                if (direction === 'next') {
+                    newSlideElement.classList.add('hidden-right');
+                } else if (direction === 'prev') {
+                    newSlideElement.classList.add('hidden-left');
+                }
+                
+                newSlideElement.style.display = 'flex';
+                newSlideElement.offsetWidth; 
+                
+                newSlideElement.classList.add('active');
+                setTimeout(() => {
+                     newSlideElement.classList.remove('hidden-left', 'hidden-right');
+                }, 10);
+               
+                // Torna o botão da IA visível apenas no slide 8 para a Dica Rápida
+                if (currentSlide === 8) {
+                    geminiTipBtn.style.display = 'flex';
+                } else {
+                    geminiTipBtn.style.display = 'none';
+                }
+            }
+
+            updateUI();
+        }
+
+        /** Atualiza o contador de slides. */
+        function updateUI() {
+            slideCounter.textContent = `Slide ${currentSlide} / ${totalSlides}`;
+        }
+
+        // --- Funções do Modal ---
+
+        function openModal() {
+            modal.classList.add('active');
+            ideaInput.focus();
+        }
+
+        function closeModal(event) {
+            // Fecha apenas se clicar no overlay (o target é o modal)
+            if (event.target === modal) {
+                 modal.classList.remove('active');
+            }
+        }
+
+        // --- Funções da API Gemini ---
+
+        /**
+         * Função genérica para chamar a API Gemini com backoff exponencial.
+         * @param {object} payload - O corpo da requisição da API.
+         * @param {number} maxRetries - O número máximo de tentativas de repetição.
+         * @returns {Promise<object>} O objeto de resposta JSON da API.
+         */
+        async function exponentialBackoffFetch(payload, maxRetries = 5) {
+            for (let i = 0; i < maxRetries; i++) {
+                try {
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+
+                    if (response.ok) {
+                        return await response.json();
+                    }
+
+                    // Se for um erro 429 ou 5xx, tenta novamente
+                    if (response.status === 429 || response.status >= 500) {
+                        console.warn(`Tentativa ${i + 1} falhou com status ${response.status}. Tentando novamente...`);
+                    } else {
+                        // Para outros erros (e.g., 400 Bad Request), não tenta novamente.
+                        throw new Error(`Erro API: ${response.statusText}`);
+                    }
+                } catch (error) {
+                    if (i === maxRetries - 1) throw error; // Lança erro após a última tentativa
+                    console.error("Erro na API, tentando novamente:", error);
+                }
+
+                // Espera com backoff exponencial
+                const delay = Math.pow(2, i) * 1000 + Math.random() * 1000;
+                await new Promise(resolve => setTimeout(resolve, delay));
+            }
+        }
+
+        /** Analisa a ideia de negócio usando structured output (JSON). */
+        async function analyzeBusinessIdea() {
+            const businessIdea = ideaInput.value.trim();
+            if (!businessIdea) {
+                analyzerResult.innerHTML = '<p class="text-red-500">Por favor, insira uma ideia de negócio para analisar.</p>';
+                return;
+            }
+
+            analyzeBtn.disabled = true;
+            analyzerSpinner.classList.remove('hidden');
+            initialMessage.style.display = 'none';
+            analyzerResult.innerHTML = `<p class="text-gray-600 italic">Analisando ${businessIdea}... Aguarde, o Gemini está calculando os custos!</p>`;
+
+            const userQuery = `Gere uma lista detalhada de 5 Custos Fixos e 5 Custos Variáveis típicos para o seguinte negócio em uma startup: "${businessIdea}". Responda usando APENAS o formato JSON solicitado.`;
+
+            const costSchema = {
+                type: "OBJECT",
+                properties: {
+                    fixedCosts: {
+                        type: "ARRAY",
+                        description: "Lista de 5 custos que não mudam com o volume de vendas, como aluguel e salários fixos.",
+                        items: { type: "STRING" }
+                    },
+                    variableCosts: {
+                        type: "ARRAY",
+                        description: "Lista de 5 custos que variam diretamente com o volume de produção ou vendas, como matéria-prima e comissão.",
+                        items: { type: "STRING" }
+                    }
+                },
+                required: ["fixedCosts", "variableCosts"]
+            };
+            
+            const systemInstruction = "Você é um consultor financeiro especialista em startups e custos empresariais. Sua única tarefa é categorizar os custos de uma nova empresa em Custos Fixos e Variáveis com base na descrição fornecida pelo usuário.";
+
+            const payload = {
+                contents: [{ parts: [{ text: userQuery }] }],
+                systemInstruction: { parts: [{ text: systemInstruction }] },
+                generationConfig: {
+                    responseMimeType: "application/json",
+                    responseSchema: costSchema
+                }
+            };
+
+            try {
+                const result = await exponentialBackoffFetch(payload);
+                const jsonText = result.candidates?.[0]?.content?.parts?.[0]?.text;
+                const parsedJson = JSON.parse(jsonText);
+
+                let html = '<h3 class="text-xl font-bold text-gray-800 mb-4">Análise para: ' + businessIdea + '</h3>';
+                
+                // Custos Fixos
+                html += '<div class="mb-4">';
+                html += '<h4 class="font-bold text-lg text-blue-700 flex items-center mb-2">Custos Fixos 🏠🔒</h4>';
+                html += '<ul class="list-disc ml-6 space-y-1">';
+                if (parsedJson.fixedCosts && parsedJson.fixedCosts.length) {
+                    parsedJson.fixedCosts.forEach(cost => {
+                        html += `<li>${cost}</li>`;
+                    });
+                } else {
+                     html += `<li>Nenhum custo fixo sugerido.</li>`;
+                }
+                html += '</ul></div>';
+
+                // Custos Variáveis
+                html += '<div>';
+                html += '<h4 class="font-bold text-lg text-green-700 flex items-center mb-2">Custos Variáveis 📈</h4>';
+                html += '<ul class="list-disc ml-6 space-y-1">';
+                 if (parsedJson.variableCosts && parsedJson.variableCosts.length) {
+                    parsedJson.variableCosts.forEach(cost => {
+                        html += `<li>${cost}</li>`;
+                    });
+                } else {
+                     html += `<li>Nenhum custo variável sugerido.</li>`;
+                }
+                html += '</ul></div>';
+                
+                analyzerResult.innerHTML = html;
+
+            } catch (error) {
+                console.error("Erro ao analisar custos:", error);
+                analyzerResult.innerHTML = '<p class="text-red-500 font-bold">❌ Erro ao processar a análise. Tente novamente ou ajuste a ideia do negócio.</p>';
+            } finally {
+                analyzeBtn.disabled = false;
+                analyzerSpinner.classList.add('hidden');
+            }
+        }
+
+        /** Gera uma dica rápida com base no conteúdo do Slide 8. */
+        async function generateQuickTip() {
+            // Pega o conteúdo de texto relevante do slide 8
+            const slideContent = `
+                Saber quanto custa produzir cada unidade do seu produto ou serviço é essencial para definir o preço de venda. Veja só:
+                Se seu sanduíche custa R$ 5,00 só de ingredientes (custo variável), e você vende por R$ 4,00, vai ter prejuízo em cada sanduíche vendido. Parece óbvio, mas muita gente cai nessa armadilha!
+                Entender os custos variáveis permite colocar um preço justo que cubra os gastos de produção, os custos fixos e ainda gere lucro para o negócio crescer.
+            `;
+            
+            geminiTipBtn.disabled = true;
+            tipSpinner.classList.remove('hidden');
+            tipResult.textContent = 'Gerando Dica de Ouro...';
+
+            const userQuery = `Baseado no seguinte texto sobre Custos Variáveis e preço de venda, gere uma "Dica de Ouro" em uma única frase curta e de alto impacto para empreendedores. O foco deve ser na regra de ouro da precificação. TEXTO: ${slideContent}`;
+
+            const systemInstruction = "Você é um mentor de negócios experiente. Sua tarefa é extrair o conhecimento mais crítico de um bloco de texto e resumi-lo em uma única frase inspiradora e prática.";
+
+            const payload = {
+                contents: [{ parts: [{ text: userQuery }] }],
+                systemInstruction: { parts: [{ text: systemInstruction }] }
+            };
+
+            try {
+                const result = await exponentialBackoffFetch(payload);
+                const tip = result.candidates?.[0]?.content?.parts?.[0]?.text || "Não foi possível gerar a dica no momento. Tente novamente!";
+                tipResult.innerHTML = `<span class="font-extrabold">Dica de Ouro do Gemini:</span> ${tip}`;
+            } catch (error) {
+                console.error("Erro ao gerar dica:", error);
+                tipResult.innerHTML = '<span class="text-red-500">Erro ao gerar dica (Verifique o console).</span>';
+            } finally {
+                geminiTipBtn.disabled = false;
+                tipSpinner.classList.add('hidden');
+            }
+        }
+
+        // --- Event Listeners ---
+        
+        aiToolBtn.addEventListener('click', openModal);
+        analyzeBtn.addEventListener('click', analyzeBusinessIdea);
+        geminiTipBtn.addEventListener('click', generateQuickTip);
+        
+        // Listener para navegação por teclado
+        document.addEventListener('keydown', (e) => {
+            const key = e.key;
+            if (modal.classList.contains('active')) {
+                // Não navega se o modal estiver aberto
+                return;
+            }
+
+            if (key === 'ArrowRight' || key.toLowerCase() === 'd') {
+                updateSlide(currentSlide + 1, 'next');
+            } else if (key === 'ArrowLeft' || key.toLowerCase() === 'a') {
+                updateSlide(currentSlide - 1, 'prev');
+            }
+        });
+
+
+        // Inicializa o primeiro slide e a UI
+        window.onload = function() {
+            // Garante que apenas o primeiro slide esteja ativo e visível no início
+            allSlides.forEach((slide, index) => {
+                if (index === 0) {
+                    slide.classList.add('active');
+                    slide.style.display = 'flex';
+                } else {
+                    slide.classList.remove('active');
+                    slide.style.display = 'none';
+                }
+            });
+            updateUI();
+             // Esconde o botão da dica rápida no carregamento (só deve aparecer no slide 8)
+            geminiTipBtn.style.display = 'none'; 
+        };
+
+    </script>
+</body>
+</html>
